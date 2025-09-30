@@ -67,12 +67,12 @@ ln -sf "$CRON_FILE" /etc/cron.d/maa-cron
 
 CLI_FILE="/root/.config/maa/cli.toml"
 INFRAST_FILE="/root/.config/maa/infrast/infrast.json"
-PROFILES_FILE="/root/.config/maa/profiles/default.json"
+PROFILES_FILE="/root/.config/maa/profiles/default.toml"
 TASKS_FILE="/root/.config/maa/tasks/tasks.yaml"
 
 CLI_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/cli.toml"
 INFRAST_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/infrast.json"
-PROFILES_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/default.json"
+PROFILES_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/default.toml"
 TASKS_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/tasks.yaml"
 
 if [ ! -f "$CLI_FILE" ]; then
@@ -111,8 +111,8 @@ if [ ! -f "/root/Maa基建文件.json" ]; then
 ln -sf ./.config/maa/infrast/infrast.json /root/Maa基建文件.json
 fi
 
-if [ ! -f "/root/Maa配置文件.json" ]; then
-ln -sf ./.config/maa/profiles/default.json /root/Maa配置文件.json
+if [ ! -f "/root/Maa配置文件.toml" ]; then
+ln -sf ./.config/maa/profiles/default.toml /root/Maa配置文件.toml
 fi
 
 if [ ! -f "/root/Maa任务文件.yaml" ]; then
