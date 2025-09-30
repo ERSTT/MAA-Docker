@@ -1,0 +1,40 @@
+name: Build and Push Docker Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_check_changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Get current date in UTC+8
+        id: date
+        run: |
+          current_date=$(TZ="Asia/Shanghai" date +'%Y%m%d')
+          echo "Current date is $current_date"
+          echo "DATE=$current_date" >> $GITHUB_ENV
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t erstt/maa:${{ env.DATE }} \
+            -t erstt/maa:latest \
+            -t erstt/maa-cli:${{ env.DATE }} \
+            -t erstt/maa-cli:latest \
+            .
+
+      - name: Push Docker images
+        run: |
+          docker push erstt/maa:${{ env.DATE }}
+          docker push erstt/maa:latest
+          docker push erstt/maa-cli:${{ env.DATE }}
+          docker push erstt/maa-cli:latest
