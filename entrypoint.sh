@@ -65,13 +65,22 @@ fi
 chmod 0644 "$CRON_FILE"
 ln -sf "$CRON_FILE" /etc/cron.d/maa-cron
 
+CLI_FILE="/root/.config/maa/cli.toml"
 INFRAST_FILE="/root/.config/maa/infrast/infrast.json"
 PROFILES_FILE="/root/.config/maa/profiles/default.json"
 TASKS_FILE="/root/.config/maa/tasks/tasks.yaml"
 
+CLI_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/cli.toml"
 INFRAST_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/infrast.json"
 PROFILES_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/profiles.json"
 TASKS_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/tasks.yaml"
+
+if [ ! -f "$CLI_FILE" ]; then
+echo
+echo "Downloading cli file..."
+mkdir -p "$(dirname "$CLI_FILE")"
+curl -L -o "${CLI_FILE}" "${CLI_URL}"
+fi
 
 if [ ! -f "$INFRAST_FILE" ]; then
 echo
@@ -92,6 +101,10 @@ echo
 echo "Downloading tasks file..."
 mkdir -p "$(dirname "$TASKS_FILE")"
 curl -L -o "${TASKS_FILE}" "${TASKS_URL}"
+fi
+
+if [ ! -f "/root/Maa-cli配置文件.toml" ]; then
+ln -sf ./.config/maa/cli.toml /root/Maa-cli配置文件.toml
 fi
 
 if [ ! -f "/root/Maa基建文件.json" ]; then
