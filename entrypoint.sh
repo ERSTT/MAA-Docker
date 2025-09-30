@@ -20,19 +20,6 @@ if [ ! -x "${INSTALL_PATH}/maa" ]; then
     mv "$MAA_FILE" "${INSTALL_PATH}/maa"
     chmod +x "${INSTALL_PATH}/maa"
 
-    echo
-    echo "Install maa maa_core and resources..."
-    if ! maa install; then
-        echo "maa_core install failed"
-        exit 1
-    fi
-
-    echo
-    echo "Hot update for resources..."
-    if ! maa hot-update; then
-        echo "maa hot-update failed, continuing anyway"
-    fi
-
     PARENT_DIR=$(dirname "$MAA_FILE")
     if [[ "$PARENT_DIR" != "/tmp" ]]; then
         rm -rf "$PARENT_DIR"
@@ -42,10 +29,26 @@ if [ ! -x "${INSTALL_PATH}/maa" ]; then
     rm -f "${TEMP_TAR}"
 fi
 
+MAA_INSTALL_FILE="/root/.local/share/maa/"
+if [ ! -x "${MAA_INSTALL_FILE}" ]; then
+    echo
+    echo "Install maa maa_core and resources..."
+    if ! maa install; then
+        echo "maa_core install failed"
+        exit 1
+    fi
+fi
+  
 echo
 echo "Update maa maa_core and resources..."
 if ! maa update; then
     echo "maa update failed, continuing anyway..."
+fi
+
+echo
+echo "Hot update for resources..."
+if ! maa hot-update; then
+    echo "maa hot-update failed, continuing anyway"
 fi
 
 echo
