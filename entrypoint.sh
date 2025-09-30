@@ -72,7 +72,7 @@ TASKS_FILE="/root/.config/maa/tasks/tasks.yaml"
 
 CLI_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/cli.toml"
 INFRAST_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/infrast.json"
-PROFILES_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/profiles.json"
+PROFILES_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/default.json"
 TASKS_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/tasks.yaml"
 
 if [ ! -f "$CLI_FILE" ]; then
@@ -112,7 +112,7 @@ ln -sf ./.config/maa/infrast/infrast.json /root/Maa基建文件.json
 fi
 
 if [ ! -f "/root/Maa配置文件.json" ]; then
-ln -sf ./.config/maa/profiles/profiles.json /root/Maa配置文件.json
+ln -sf ./.config/maa/profiles/default.json /root/Maa配置文件.json
 fi
 
 if [ ! -f "/root/Maa任务文件.yaml" ]; then
