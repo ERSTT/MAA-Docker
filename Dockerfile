@@ -7,5 +7,7 @@ RUN apt update && \
     update-ca-certificates && \
     rm -rf /var/lib/apt/lists/* && \
     chmod +x /entrypoint.sh
+    
+WORKDIR /root
 
 CMD ["/entrypoint.sh"]
