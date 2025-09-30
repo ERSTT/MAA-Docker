@@ -1,0 +1,54 @@
+# MAA Core 的连接选项
+# 有两种方式连接明日方舟
+# 1. 通过 ADB 连接
+# [connection]
+# type = "ADB"             # 连接类型
+# adb_path = "adb"         # adb 可执行文件路径
+# device = "localhost:5555" # ADB 设备序列号（更多详情请参见 `adb help`）
+# config = "General"     # 连接配置名称
+
+# 2. 通过 PlayTools 连接
+# 更多详情请参见：https://maa.plus/docs/1.4-Mac模拟器支持.html#✅-playcover-原生运行最流畅🚀
+# [connection]
+# type = "PlayTools"         # 连接类型
+# address = "localhost:1717" # PlayTools 地址
+# config = "CompatMac"       # 连接配置名称
+
+
+# MAA Core 的资源选项
+# [resource]
+# 为非简体中文版加载额外资源
+# 所有基础资源默认是简体中文，因此只有非简体中文才需要在这里指定
+# 如果你使用的是简体中文版，请留空
+# 该选项会根据任务配置中的 `client_type` 字段自动设置
+# 关于 `client_type` 的更多信息请查阅任务配置文档
+# global_resource = "YoStarEN"
+# 为非 Android 版本的明日方舟加载额外资源
+# 所有基础资源默认是 Android 版本，仅 iOS 需要在这里指定
+# 如果你使用的是 Android 版本，请留空
+# 该选项会根据 `connection.type` 字段自动设置，
+# 因此无需手动设置
+# platform_diff_resource = "iOS"
+# 从用户配置目录加载资源，最后加载以覆盖其他所有资源
+# 如果不想加载用户资源，请留空
+# 如果此选项设置为 true，但没有找到用户资源，
+# 此选项将被忽略并显示警告
+# user_resource = true
+
+# MAA Core 的静态选项
+# 更多详情请见 `https://maa.plus/docs/3.1-集成文档.html#asstsetstaticoption`
+# [static_options]
+# cpu_ocr = false # 设置为 true 使用 CPU OCR，如果想使用 GPU OCR，请设置为 false
+# gpu_ocr = 1     # 设置 GPU ID 来使用 GPU OCR（默认未设置）
+
+# MAA Core 的实例选项
+# 更多详情请见 `https://maa.plus/docs/3.1-集成文档.html#asstsetinstanceoption`
+# [instance_options]
+# 触控模式设置，默认 minitouch 选项: minitouch | maatouch | adb
+# touch_mode = "MaaTouch"
+# 是否暂停下干员，同时影响抄作业、肉鸽、保全
+# deployment_with_pause = false
+# 是否使用 AdbLite
+# adb_lite_enabled = false
+# 退出时是否杀掉 Adb 进程
+# kill_adb_on_exit = false
