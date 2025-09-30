@@ -6,7 +6,8 @@ TEMP_TAR="/tmp/maa.tar.gz"
 INSTALL_PATH="/usr/local/bin"
 
 if [ ! -x "${INSTALL_PATH}/maa" ]; then
-    echo "Downloading maa-cli from ${MAA_URL}..."
+    echo
+    echo "Downloading maa-cli..."
     curl -L -o "${TEMP_TAR}" "${MAA_URL}"
     tar -xzvf "${TEMP_TAR}" -C /tmp
 
@@ -19,12 +20,14 @@ if [ ! -x "${INSTALL_PATH}/maa" ]; then
     mv "$MAA_FILE" "${INSTALL_PATH}/maa"
     chmod +x "${INSTALL_PATH}/maa"
 
+    echo
     echo "Install maa maa_core and resources..."
     if ! maa install; then
         echo "maa_core install failed"
         exit 1
     fi
 
+    echo
     echo "Hot update for resources..."
     if ! maa hot-update; then
         echo "maa hot-update failed, continuing anyway"
@@ -38,11 +41,14 @@ if [ ! -x "${INSTALL_PATH}/maa" ]; then
     fi
     rm -f "${TEMP_TAR}"
 fi
+
+echo
 echo "Update maa maa_core and resources..."
 if ! maa update; then
     echo "maa update failed, continuing anyway..."
 fi
 
+echo
 echo "Update maa-cli..."
 if ! maa self update; then
     echo "maa self update failed, continuing anyway..."
@@ -55,6 +61,47 @@ if [ ! -f "$CRON_FILE" ]; then
 fi
 chmod 0644 "$CRON_FILE"
 ln -sf "$CRON_FILE" /etc/cron.d/maa-cron
+
+INFRAST_FILE="/root/.config/maa/infrast/infrast.json"
+PROFILES_FILE="/root/.config/maa/profiles/profiles.json"
+TASKS_FILE="/root/.config/maa/tasks/tasks.yaml"
+
+INFRAST_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/infrast.json"
+PROFILES_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/profiles.json"
+TASKS_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/tasks.yaml"
+
+if [ ! -f "$INFRAST_FILE" ]; then
+echo
+echo "Downloading infrast file..."
+mkdir -p "$(dirname "$INFRAST_FILE")"
+curl -L -o "${INFRAST_FILE}" "${INFRAST_URL}"
+fi
+
+if [ ! -f "${PROFILES_FILE}" ]; then
+echo
+echo "Downloading profiles file..."
+mkdir -p "$(dirname "$PROFILES_FILE")"
+curl -L -o "${PROFILES_FILE}" "${PROFILES_URL}"
+fi
+
+if [ ! -f "${TASKS_FILE}" ]; then
+echo
+echo "Downloading tasks file..."
+mkdir -p "$(dirname "$TASKS_FILE")"
+curl -L -o "${TASKS_FILE}" "${TASKS_URL}"
+fi
+
+if [ ! -f "/root/Maa基建文件.json" ]; then
+ln -sf ./.config/maa/infrast/infrast.json /root/Maa基建文件.json
+fi
+
+if [ ! -f "/root/Maa配置文件.json" ]; then
+ln -sf ./.config/maa/profiles/profiles.json /root/Maa配置文件.json
+fi
+
+if [ ! -f "/root/Maa任务文件.yaml" ]; then
+ln -sf ./.config/maa/tasks/tasks.yaml /root/Maa任务文件.yaml
+fi
 
 echo "Starting cron with tasks from $CRON_FILE"
 cron -f
