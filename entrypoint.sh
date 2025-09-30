@@ -66,7 +66,7 @@ chmod 0644 "$CRON_FILE"
 ln -sf "$CRON_FILE" /etc/cron.d/maa-cron
 
 INFRAST_FILE="/root/.config/maa/infrast/infrast.json"
-PROFILES_FILE="/root/.config/maa/profiles/profiles.json"
+PROFILES_FILE="/root/.config/maa/profiles/default.json"
 TASKS_FILE="/root/.config/maa/tasks/tasks.yaml"
 
 INFRAST_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/infrast.json"
