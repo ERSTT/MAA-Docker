@@ -61,6 +61,10 @@ CRON_FILE="/root/maa-cron"
 if [ ! -f "$CRON_FILE" ]; then
     echo "* * * * * root echo 请编辑maa-cron文件 >> /proc/1/fd/1 2>&1" > "$CRON_FILE"
     echo "" >> "$CRON_FILE"
+else
+    if [ -n "$(tail -c1 "$CRON_FILE")" ]; then
+        echo "" >> "$CRON_FILE"
+    fi
 fi
 chmod 0644 "$CRON_FILE"
 ln -sf "$CRON_FILE" /etc/cron.d/maa-cron
