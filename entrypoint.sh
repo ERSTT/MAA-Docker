@@ -66,8 +66,10 @@ chmod 0644 "$CRON_FILE"
 ln -sf "$CRON_FILE" /etc/cron.d/maa-cron
 
 CLI_FILE="/root/.config/maa/cli.toml"
-INFRAST_FILE="/root/.config/maa/infrast/infrast.json"
 PROFILES_FILE="/root/.config/maa/profiles/default.toml"
+INFRAST_DIR="/root/.config/maa/infrast"
+INFRAST_FILE="/root/.config/maa/infrast/infrast.json"
+TASKS_DIR="/root/.config/maa/tasks"
 TASKS_FILE="/root/.config/maa/tasks/tasks.yaml"
 
 CLI_URL="https://github.com/ERSTT/MAA-Docker/raw/refs/heads/main/cli.toml"
@@ -104,19 +106,27 @@ curl -L -o "${TASKS_FILE}" "${TASKS_URL}"
 fi
 
 if [ ! -f "/root/Maa-cli配置文件.toml" ]; then
-ln -sf ./.config/maa/cli.toml /root/Maa-cli配置文件.toml
-fi
-
-if [ ! -f "/root/Maa基建文件.json" ]; then
-ln -sf ./.config/maa/infrast/infrast.json /root/Maa基建文件.json
+    ln -sf ./.config/maa/cli.toml /root/Maa-cli配置文件.toml
 fi
 
 if [ ! -f "/root/Maa配置文件.toml" ]; then
-ln -sf ./.config/maa/profiles/default.toml /root/Maa配置文件.toml
+    ln -sf ./.config/maa/profiles/default.toml /root/Maa配置文件.toml
 fi
 
-if [ ! -f "/root/Maa任务文件.yaml" ]; then
-ln -sf ./.config/maa/tasks/tasks.yaml /root/Maa任务文件.yaml
+if [ ! -d "/root/Maa基建目录" ]; then
+    ln -sf ./.config/maa/infrast /root/Maa基建目录
+fi
+
+if [ ! -f "/root/Maa基建配置文件.json" ]; then
+    ln -sf ./.config/maa/infrast/infrast.json /root/Maa基建配置文件.json
+fi
+
+if [ ! -d "/root/Maa任务目录" ]; then
+    ln -sf ./.config/maa/tasks /root/Maa任务目录
+fi
+
+if [ ! -f "/root/Maa任务配置文件.yaml" ]; then
+    ln -sf ./.config/maa/tasks/tasks.yaml /root/Maa任务配置文件.yaml
 fi
 
 echo "Starting cron with tasks from $CRON_FILE"
